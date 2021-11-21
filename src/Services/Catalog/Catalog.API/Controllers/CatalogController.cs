@@ -11,11 +11,13 @@ namespace Catalog.API.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ILogger<CatalogController> _logger;
+        private readonly IRepository<Product> _repository;
 
-        public CatalogController(ILogger<CatalogController> logger, IProductRepository productRepository)
+        public CatalogController(ILogger<CatalogController> logger, IProductRepository productRepository,IRepository<Product> repository)
         {
             _logger = logger;
             _productRepository = productRepository;
+            _repository = repository;
         }
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Product>), (int)HttpStatusCode.OK)]
@@ -67,6 +69,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteProductById(string id)
         {
+            //return Ok(await _repository.Delete(id)); updates only status field.
             return Ok(await _productRepository.DeleteProduct(id));
         }
     }

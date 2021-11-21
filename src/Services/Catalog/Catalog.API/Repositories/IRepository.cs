@@ -20,7 +20,7 @@ namespace Catalog.API.Repositories
         {
             var client = new MongoClient(config.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase(config.GetValue<string>("DatabaseSettings:DatabaseName"));
-            collection = database.GetCollection<T>(typeof(T).Name);
+            collection = database.GetCollection<T>(typeof(T).Name+"s");
         }
         public async Task<T> CreateOrUpdate(T entity)
         {
